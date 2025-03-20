@@ -5,9 +5,13 @@ class DataGenerator:
         self.height = height
         self.width = width
 
-    def generate_image(self):
+    def __len__(self):
+        return self.height * self.width
+
+    def generate_image(self, idx):
         image = np.zeros((self.height, self.width), dtype=np.float32)
-        y = np.random.randint(0, self.height)
-        x = np.random.randint(0, self.width)
+        index = idx % (self.height * self.width)
+        x = index % self.width
+        y = index // self.width
         image[y, x] = 1.0  # Set the white pixel
         return image, (y, x)  # Return the image and the coordinates of the white pixel

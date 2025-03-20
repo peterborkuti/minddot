@@ -18,14 +18,15 @@ class PixelDataset(Dataset):
         return self.num_samples
 
     def __getitem__(self, idx):
-        image, coordinates = self.generator.generate_image()
+        image, coordinates = self.generator.generate_image(idx)
         return torch.tensor(image, dtype=torch.float32).unsqueeze(0), torch.tensor(coordinates, dtype=torch.float32)
 
-def train_model(num_samples=AppConfig.num_samples, num_epochs=AppConfig.num_epochs, batch_size=AppConfig.batch_size, learning_rate=AppConfig.learning_rate):
+def train_model(num_epochs=AppConfig.num_epochs, batch_size=AppConfig.batch_size, learning_rate=AppConfig.learning_rate):
     save_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), AppConfig.model_dir)
     os.makedirs(save_dir, exist_ok=True)
 
     generator = DataGenerator(AppConfig.image_size,AppConfig.image_size)
+    num_samples = AppConfig.samples_multiplier*len(generator)
     dataset = PixelDataset(generator, num_samples)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 

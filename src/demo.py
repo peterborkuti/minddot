@@ -74,7 +74,7 @@ def mouse_callback(event, x, y, flags, param):
             orig_display_x = int(img_x * DISPLAY_SCALE + DISPLAY_SCALE / 2)
             orig_display_y = int(img_y * DISPLAY_SCALE + DISPLAY_SCALE / 2)
             cv2.circle(scaled_image_color, (orig_display_x, orig_display_y), 
-                     DISPLAY_SCALE // 4, (255, 0, 0), 2)  # Blue circle
+                     DISPLAY_SCALE // 2, (0, 0, 255), 2)  # Blue circle
             
             # Draw prediction in green
             cv2.circle(scaled_image_color, (pred_display_x, pred_display_y), 
